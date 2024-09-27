@@ -237,7 +237,7 @@ void create_window()
 		{
 			sessionmenu_item_pwroff = gtk_menu_item_new_with_label("Power Off");
 			gtk_menu_shell_append(GTK_MENU_SHELL(sessionmenu), sessionmenu_item_pwroff);
-			g_signal_connect(sessionmenu_item_pwroff, "activate", G_CALLBACK(sessionrun), logoutcmd);
+			g_signal_connect(sessionmenu_item_pwroff, "activate", G_CALLBACK(sessionrun), pwroffcmd);
 		}
 		if (showsessionreboot)
 		{
