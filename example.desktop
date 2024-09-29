@@ -1,0 +1,6 @@
+[Desktop Entry]
+Name=GWMenu Settings (tile entry)
+Exec=gwmenu --cfg
+Icon=menulibre
+Menu=Extra
+Position=1

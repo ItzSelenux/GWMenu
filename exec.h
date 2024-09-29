@@ -138,9 +138,12 @@ void on_run_command(GtkWidget *widget, GdkEventButton *event, GtkWidget *entry)
 	}
 }
 
-void execute_command(gchar *command)
+void execute_command(GtkWidget *widget, gpointer user_data)
 {
-g_print(command);
+
+    gchar *command = (gchar *)user_data; // Retrieve the command string
+
+
 	if (command != NULL && strlen(command) > 1)
 	{
 		GError *error = NULL;

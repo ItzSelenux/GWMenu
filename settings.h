@@ -13,7 +13,7 @@ void updateconf(GtkButton *button, gpointer user_data)
 
 	if (reset)
 	{
-	dialog = gtk_message_dialog_new(NULL, GTK_DIALOG_MODAL, GTK_MESSAGE_QUESTION, GTK_BUTTONS_OK_CANCEL, "Are you sure you want to restore SGLauncher settings as default?");
+	dialog = gtk_message_dialog_new(NULL, GTK_DIALOG_MODAL, GTK_MESSAGE_QUESTION, GTK_BUTTONS_OK_CANCEL, "Are you sure you want to restore GWMenu settings as default?");
 		gtk_window_set_position(GTK_WINDOW(dialog), GTK_WIN_POS_CENTER);
 		gtk_window_set_title(GTK_WINDOW(dialog), "Confirmation");
 		gtk_dialog_set_default_response(GTK_DIALOG(dialog), GTK_RESPONSE_OK);
@@ -21,7 +21,12 @@ void updateconf(GtkButton *button, gpointer user_data)
 		if (result == GTK_RESPONSE_OK)
 		{
 			fprintf(fp, "[GWMenu Configuration File]\n");
+			fprintf(fp, "[Appearance]\n");
 			fprintf(fp, "iconsize=16\n");
+			fprintf(fp, "defwidth=500\n");
+			fprintf(fp, "defheight=300\n");
+			fprintf(fp, "tilesize=64\n");
+			fprintf(fp, "[Elements]\n");
 			fprintf(fp, "showuser=1\n");
 			fprintf(fp, "showsettings=1\n");
 			fprintf(fp, "showmusic=1\n");
@@ -36,6 +41,10 @@ void updateconf(GtkButton *button, gpointer user_data)
 			fprintf(fp, "showsessionsuspend=1\n");
 			fprintf(fp, "showsessionlogout=1\n");
 			fprintf(fp, "showsessionlockscreen=1\n");
+			fprintf(fp, "showtiles=1\n");
+			fprintf(fp, "showcalc=1\n");
+			fprintf(fp, "showscientific=0\n");
+			fprintf(fp, "[Commands]\n");
 			fprintf(fp, "pwroffcmd=systemctl poweroff\n");
 			fprintf(fp, "rebootcmd=systemctl reboot\n");
 			fprintf(fp, "hibernatecmd=systemctl hibernate\n");
@@ -44,9 +53,6 @@ void updateconf(GtkButton *button, gpointer user_data)
 			fprintf(fp, "lockscreencmd=xset s activate\n");
 			fprintf(fp, "settingscmd=sgsettings\n");
 			fprintf(fp, "usercmd=sgusers\n");
-			fprintf(fp, "defheight=333\n");
-			fprintf(fp, "showcalc=1\n");
-			fprintf(fp, "showscientific=0\n");
 			//fprintf(fp, "exitwhenunfocused=1\n");
 		}
 		else
@@ -58,6 +64,7 @@ void updateconf(GtkButton *button, gpointer user_data)
 	else
 	{
 		iconsize = atoi(gtk_entry_get_text(GTK_ENTRY(giconsize)));
+		defwidth = atoi(gtk_entry_get_text(GTK_ENTRY(gdefwidth)));
 		defheight = atoi(gtk_entry_get_text(GTK_ENTRY(gdefheight)));
 		showuser = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(gshowuser));
 		showmusic = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(gshowmusic));
@@ -85,7 +92,12 @@ void updateconf(GtkButton *button, gpointer user_data)
 		//gexitwhenunfocused = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(wexitwhenunfocused));
 
 			fprintf(fp, "[GWMenu Configuration File]\n");
+			fprintf(fp, "[Apperance]\n");
 			fprintf(fp, "iconsize=%d\n", iconsize);
+			fprintf(fp, "defwidth=%d\n", defwidth);
+			fprintf(fp, "defheight=%d\n", defheight);
+			fprintf(fp, "tilesize=%d\n", tilesize);
+			fprintf(fp, "[Elements]\n");
 			fprintf(fp, "showuser=%d\n", showuser);
 			fprintf(fp, "showsettings=%d\n", showsettings);
 			fprintf(fp, "showmusic=%d\n", showmusic);
@@ -100,6 +112,10 @@ void updateconf(GtkButton *button, gpointer user_data)
 			fprintf(fp, "showsessionsuspend=%d\n", showsessionsuspend);
 			fprintf(fp, "showsessionlogout=%d\n", showsessionlogout);
 			fprintf(fp, "showsessionlockscreen=%d\n", showsessionlockscreen);
+			fprintf(fp, "showtiles=%d\n", showtiles);
+			fprintf(fp, "showcalc=%d\n", showcalc);
+			fprintf(fp, "showscientific=%d\n", showscientific);
+			fprintf(fp, "[Commands]\n");
 			fprintf(fp, "pwroffcmd=%s\n", pwroffcmd);
 			fprintf(fp, "rebootcmd=%s\n", rebootcmd);
 			fprintf(fp, "hibernatecmd=%s\n", hibernatecmd);
@@ -108,9 +124,7 @@ void updateconf(GtkButton *button, gpointer user_data)
 			fprintf(fp, "lockscreencmd=%s\n", lockscreencmd);
 			fprintf(fp, "settingscmd=%s\n", settingscmd);
 			fprintf(fp, "usercmd=%s\n", usercmd);
-			fprintf(fp, "defheight=%d\n", defheight);
-			fprintf(fp, "showcalc=%d\n", showcalc);
-			fprintf(fp, "showscientific=%d\n", showscientific);
+
 		//fprintf(fp, "exitwhenunfocused=%d\n", gexitwhenunfocused);
 	}
 	fclose(fp);
@@ -143,6 +157,10 @@ void readconf()
 
 				if (strcmp(name, "iconsize") == 0) 
 					iconsize = atoi(value_str);
+				else if (strcmp(name, "showtiles") == 0) 
+					showtiles = atoi(value_str);
+				else if (strcmp(name, "tilesize") == 0) 
+					tilesize = atoi(value_str);
 				else if (strcmp(name, "showuser") == 0) 
 					showuser = atoi(value_str);
 				else if (strcmp(name, "showdoc") == 0) 
@@ -189,6 +207,8 @@ void readconf()
 
 				else if (strcmp(name, "defheight") == 0) 
 					defheight = atoi(value_str);
+				else if (strcmp(name, "defwidth") == 0) 
+					defwidth = atoi(value_str);
 				else if (strcmp(name, "showcalc") == 0) 
 					showcalc = atoi(value_str);
 				else if (strcmp(name, "showscientific") == 0) 

@@ -76,16 +76,19 @@ void on_submenu_item_onlinehelp_selected(GtkMenuItem *menuitem, gpointer userdat
 void create_window()
 {
 	char local_app_dir[1024] = "";
+	char local_tile_dir[1024] = "";
 	char profilepic[1024] = "";
 	sprintf(local_app_dir, "%s/.local/share/applications", home_dir);
+	sprintf(local_tile_dir, "%s/.local/share/gwmenu/tiles", home_dir);
 	sprintf(profilepic, "%s/.face", home_dir);
 	app_dirs[2] = local_app_dir;
+	tile_dirs[2] = local_tile_dir;
 
 	listbox2 = gtk_list_box_new();
 	window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
 	gtk_window_set_title(GTK_WINDOW(window), "GWMenu");
 	//gtk_container_set_border_width(GTK_CONTAINER(window), 10);
-	gtk_widget_set_size_request(window, 333, defheight);
+	gtk_widget_set_size_request(window, defwidth, defheight);
 	gtk_window_set_decorated(GTK_WINDOW(window), FALSE);
 	gtk_window_set_skip_taskbar_hint(GTK_WINDOW(window), TRUE);
 	gtk_window_set_skip_pager_hint(GTK_WINDOW(window), TRUE);
@@ -142,7 +145,7 @@ void create_window()
 
 	scrolled_window = gtk_scrolled_window_new(NULL, NULL);
 	gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(scrolled_window),
-		GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
+		GTK_POLICY_EXTERNAL, GTK_POLICY_AUTOMATIC);
 
 	treeview = gtk_tree_view_new();
 	gtk_tree_view_set_activate_on_single_click(GTK_TREE_VIEW(treeview), TRUE);
@@ -198,6 +201,7 @@ void create_window()
 
 	// Load apps into the list box
 	grid = gtk_grid_new();
+	gtk_grid_set_column_spacing(GTK_GRID(grid), 4);
 	gtk_container_add(GTK_CONTAINER(window), grid);
 	mathtext = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 2);
 	math = gtk_label_new("Math Answer: ");
@@ -335,6 +339,22 @@ void create_window()
 	gtk_grid_attach(GTK_GRID(grid), scrolled_window, 1, 0, 1, 1);
 	gtk_grid_attach(GTK_GRID(grid), mathtext, 1, 1, 1, 1);
 	gtk_grid_attach(GTK_GRID(grid), entry, 0, 2, 2, 1);
+
+	if (showtiles)
+	{
+		tilegrid = gtk_grid_new();
+		load_tiles(GTK_GRID(tilegrid));
+
+		scrolled_tiles = gtk_scrolled_window_new(NULL, NULL);
+		gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(scrolled_tiles),
+			GTK_POLICY_NEVER, GTK_POLICY_AUTOMATIC);
+
+		gtk_container_add(GTK_CONTAINER(scrolled_tiles), tilegrid);
+
+		gtk_grid_attach(GTK_GRID(grid), scrolled_tiles, 2, 0, 1, 3);
+		gtk_widget_set_vexpand(scrolled_tiles, TRUE);
+		gtk_widget_set_hexpand(tilegrid, FALSE);
+	}
 
 	gtk_widget_set_size_request(listbox2, -1, -1);
 	gtk_widget_set_size_request(scrolled_window, -1, 256);

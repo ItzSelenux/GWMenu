@@ -9,6 +9,7 @@
 
 const gchar *cweb, *cwebng, *corder, *active_text; 
 const gchar* app_dirs[] = {"/usr/share/applications", "", NULL};
+const gchar* tile_dirs[] = {"/usr/share/gwmenu/tiles", "", NULL};
 const gchar* quick_dirs[] = {NULL};
 const gchar* pver = mver;
 gchar *pm, *webengine, *cwengine, cengine[ML], *home_dir, config_file_path[ML], *iconame,
@@ -19,7 +20,8 @@ gint wengine, order = 0, showweb = 1, showcmd = 1, showcalc = 1, showda = 1,
 callconfig = 0, nohome = 0, restarting = 0, iconsize = 16, showuser = 1, showmusic = 1, 
 showdoc = 1, showdwn = 1, showimg = 1, showvid = 1, showsession = 1,
 showsessionpwroff=1, showsessionreboot=1, showsessionhibernate=1, showsessionsuspend=1, 
-showsessionlogout=1, showsessionlockscreen=1, showsettings=1, defheight = 500;
+showsessionlogout=1, showsessionlockscreen=1, showsettings=1, defheight = 500, defwidth = 300,
+ showtiles=1, tilesize=32;
 
 gboolean gshowcmd, gshowcalc, gshowweb, gshowda, gshowscientific, gexitwhenunfocused;
 
@@ -28,6 +30,7 @@ GtkWidget *window, *grid, *button, *cmd_row, *dialog, *web_row, *entry, *manswer
 *submenu_item_about, *submenu_item4, *submenu_item5, *weblabel, *webcombo, *webctm, *worder, *wshowcmd,
 *wshowweb, *wshowcalc, *wshowscientific, *wexitwhenunfocused, *defbtn, *applybtn, *treeview,
 *web_box, *wshowda, *scrolled_window, *math, *submenu_item_onlinehelp, *submenu_menu_help, *submenu_item_help,
+*tilegrid, *scrolled_tiles,
 
 *sidebox, *cfg_btn, *session_btn, *home_btn, *music_btn, *doc_btn, *vid_btn, *user_btn, *dwn_btn, *opt_btn,
 	*img_btn,
@@ -37,7 +40,7 @@ GtkWidget *window, *grid, *button, *cmd_row, *dialog, *web_row, *entry, *manswer
 
 *confbox ,*notebook, *cfggrid0, *cfggrid1, *cfggrid2,
 
-*gdefheight, *giconsize,
+*gdefwidth, *gdefheight, *giconsize,
 		*gshowdoc, *gshowdwn, *gshowmusic, *gshowimg, *gshowvid, *gshowsettings, *gshowsession, *gshowuser,
 		*gshowsessionhibernate, *gshowsessionlockscreen, *gshowsessionlogout, *gshowsessionpwroff,
 		*gshowsessionreboot, *gshowsessionsuspend,

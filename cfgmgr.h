@@ -52,6 +52,7 @@ void showcfg()
 
 	gtk_window_set_position(GTK_WINDOW(dialog), GTK_WIN_POS_CENTER);
 
+		gdefwidth = gtk_entry_new();
 		gdefheight = gtk_entry_new();
 		giconsize = gtk_entry_new();
 
@@ -84,15 +85,20 @@ void showcfg()
 	cfggrid0 = gtk_grid_new();
 		gtk_grid_attach(GTK_GRID(cfggrid0), gtk_label_new("Icon Size"), 0, 0, 1, 1);
 			gtk_grid_attach(GTK_GRID(cfggrid0), giconsize, 1, 0, 1, 1);
-		gtk_grid_attach(GTK_GRID(cfggrid0), gtk_label_new("Menu height"), 0, 1, 1, 1);
-			gtk_grid_attach(GTK_GRID(cfggrid0), gdefheight, 1, 1, 1, 1);
+		gtk_grid_attach(GTK_GRID(cfggrid0), gtk_label_new("Menu Width"), 0, 1, 1, 1);
+			gtk_grid_attach(GTK_GRID(cfggrid0), gdefwidth, 1, 1, 1, 1);
+		gtk_grid_attach(GTK_GRID(cfggrid0), gtk_label_new("Menu height"), 0, 2, 1, 1);
+			gtk_grid_attach(GTK_GRID(cfggrid0), gdefheight, 1, 2, 1, 1);
 
 		gchar ciconsize[32];
+		gchar cdefwidth[32];
 		gchar cdefheight[32];
 		g_snprintf(ciconsize, sizeof(ciconsize), "%d", iconsize);
+		g_snprintf(cdefwidth, sizeof(cdefwidth), "%d", defwidth);
 		g_snprintf(cdefheight, sizeof(cdefheight), "%d", defheight);
 
 		gtk_entry_set_text(GTK_ENTRY(giconsize), ciconsize);
+		gtk_entry_set_text(GTK_ENTRY(gdefwidth), cdefwidth);
 		gtk_entry_set_text(GTK_ENTRY(gdefheight), cdefheight);
 
 	gtk_grid_set_column_homogeneous(GTK_GRID(cfggrid0), TRUE);

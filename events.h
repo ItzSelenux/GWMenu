@@ -42,10 +42,10 @@ void on_sidebarbutton_clicker(GtkWidget *widget, gpointer data)
 	{
 		gchar command[512];
 		snprintf(command, sizeof(command), "xdg-open $(xdg-user-dir %s)", scontext);
-		execute_command(command);
+		execute_command(widget, command);
 	}
 	else
 	{
-		execute_command(scontext);
+		execute_command(widget, scontext);
 	}
 }
