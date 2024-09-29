@@ -141,11 +141,17 @@ void on_run_command(GtkWidget *widget, GdkEventButton *event, GtkWidget *entry)
 void execute_command(GtkWidget *widget, gpointer user_data)
 {
 
-    gchar *command = (gchar *)user_data; // Retrieve the command string
-
+	gchar *command = (gchar *)user_data;
 
 	if (command != NULL && strlen(command) > 1)
 	{
+		char *percentPos = strchr(command, '%');
+			if (percentPos != NULL)
+			{
+				int length = percentPos - command;
+				command[length] = '\0';
+			}
+
 		GError *error = NULL;
 		GPid pid;
 		gboolean success = g_spawn_async_with_pipes(

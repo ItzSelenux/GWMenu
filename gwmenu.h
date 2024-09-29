@@ -10,7 +10,6 @@
 const gchar *cweb, *cwebng, *corder, *active_text; 
 const gchar* app_dirs[] = {"/usr/share/applications", "", NULL};
 const gchar* tile_dirs[] = {"/usr/share/gwmenu/tiles", "", NULL};
-const gchar* quick_dirs[] = {NULL};
 const gchar* pver = mver;
 gchar *pm, *webengine, *cwengine, cengine[ML], *home_dir, config_file_path[ML], *iconame,
 pwroffcmd[ML], rebootcmd[ML], hibernatecmd[ML], suspendcmd[ML], logoutcmd[ML], lockscreencmd[ML],
@@ -21,7 +20,7 @@ callconfig = 0, nohome = 0, restarting = 0, iconsize = 16, showuser = 1, showmus
 showdoc = 1, showdwn = 1, showimg = 1, showvid = 1, showsession = 1,
 showsessionpwroff=1, showsessionreboot=1, showsessionhibernate=1, showsessionsuspend=1, 
 showsessionlogout=1, showsessionlockscreen=1, showsettings=1, defheight = 500, defwidth = 300,
- showtiles=1, tilesize=32;
+ showtiles=1, tileiconsize=32, tilebuttonsize=64;
 
 gboolean gshowcmd, gshowcalc, gshowweb, gshowda, gshowscientific, gexitwhenunfocused;
 

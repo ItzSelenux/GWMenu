@@ -212,7 +212,7 @@ void create_window()
 
 	// Sidebox
 	opt_btn = gtk_menu_button_new();
-	gtk_button_set_image(GTK_BUTTON(opt_btn), gtk_image_new_from_icon_name("application-menu", GTK_ICON_SIZE_BUTTON));
+	gtk_button_set_image(GTK_BUTTON(opt_btn), gtk_image_new_from_icon_name("open-menu-symbolic", GTK_ICON_SIZE_BUTTON));
 	gtk_box_pack_start(GTK_BOX(sidebox), opt_btn, FALSE, FALSE, 2);
 	gtk_menu_button_set_popup(GTK_MENU_BUTTON(opt_btn), submenu);
 	//g_signal_connect(opt_btn, "clicked", G_CALLBACK(on_sidebarbutton_clicker), GINT_TO_POINTER(0));

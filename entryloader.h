@@ -307,7 +307,7 @@ void load_tiles(GtkGrid *grid)
 		GPtrArray *apps = (GPtrArray *)value;
 
 		GtkWidget *menu_label = gtk_label_new(menu_name);
-		gtk_widget_set_hexpand(menu_label, TRUE);
+		gtk_label_set_xalign(GTK_LABEL(menu_label), GTK_JUSTIFY_LEFT);
 		gtk_grid_attach(grid, menu_label, 0, row++, 10, 1);
 
 		GtkGrid *nested_grid = GTK_GRID(gtk_grid_new());
@@ -323,30 +323,47 @@ void load_tiles(GtkGrid *grid)
 			sscanf(app_info, "%[^;];%[^;];%[^;];%d;%d;%d;%d", app_name, toexec, icon_name, &pos_x, &pos_y, &size_x, &size_y);
 
 			GdkPixbuf *icon_pixbuf = NULL;
+
 			if (g_path_is_absolute(icon_name) && g_file_test(icon_name, G_FILE_TEST_EXISTS))
 			{
 				icon_pixbuf = gdk_pixbuf_new_from_file(icon_name, NULL);
+				if (icon_pixbuf)
+				{
+					if (gdk_pixbuf_get_width(icon_pixbuf) != tileiconsize || gdk_pixbuf_get_height(icon_pixbuf) != tileiconsize)
+					{
+						icon_pixbuf = gdk_pixbuf_scale_simple(icon_pixbuf, tileiconsize, tileiconsize, GDK_INTERP_BILINEAR);
+					}
+				}
 			}
 			else
 			{
 				GtkIconTheme *icon_theme = gtk_icon_theme_get_default();
-				GtkIconInfo *icon_info = gtk_icon_theme_lookup_icon(icon_theme, icon_name, tilesize, GTK_ICON_LOOKUP_USE_BUILTIN);
+				GtkIconInfo *icon_info = gtk_icon_theme_lookup_icon(icon_theme, icon_name, tileiconsize, GTK_ICON_LOOKUP_USE_BUILTIN);
 
 				if (icon_info)
 				{
 					icon_pixbuf = gtk_icon_info_load_icon(icon_info, NULL);
 					g_object_unref(icon_info);
+					if (icon_pixbuf && (gdk_pixbuf_get_width(icon_pixbuf) != tileiconsize || gdk_pixbuf_get_height(icon_pixbuf) != tileiconsize))
+					{
+						icon_pixbuf = gdk_pixbuf_scale_simple(icon_pixbuf, tileiconsize, tileiconsize, GDK_INTERP_BILINEAR);
+					}
 				}
 			}
 
 			if (!icon_pixbuf)
 			{
-				icon_pixbuf = gtk_icon_theme_load_icon(gtk_icon_theme_get_default(), "application-x-executable", 64, 0, NULL);
+				icon_pixbuf = gtk_icon_theme_load_icon(gtk_icon_theme_get_default(), "application-x-executable", tileiconsize, 0, NULL);
+				if (icon_pixbuf && (gdk_pixbuf_get_width(icon_pixbuf) != tileiconsize || gdk_pixbuf_get_height(icon_pixbuf) != tileiconsize))
+				{
+					icon_pixbuf = gdk_pixbuf_scale_simple(icon_pixbuf, tileiconsize, tileiconsize, GDK_INTERP_BILINEAR);
+				}
 			}
 
 			GtkWidget *app_button = gtk_button_new();
 			gtk_button_set_image(GTK_BUTTON(app_button), gtk_image_new_from_pixbuf(icon_pixbuf));
 			gtk_button_set_image_position(GTK_BUTTON(app_button), GTK_POS_TOP);
+			gtk_widget_set_size_request(app_button, tilebuttonsize, tilebuttonsize);
 
 			g_signal_connect(app_button, "clicked", G_CALLBACK(execute_command), g_strdup(toexec));
 

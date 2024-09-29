@@ -25,7 +25,8 @@ void updateconf(GtkButton *button, gpointer user_data)
 			fprintf(fp, "iconsize=16\n");
 			fprintf(fp, "defwidth=500\n");
 			fprintf(fp, "defheight=300\n");
-			fprintf(fp, "tilesize=64\n");
+			fprintf(fp, "tileiconsize=64\n");
+			fprintf(fp, "tilebuttonsize=64\n");
 			fprintf(fp, "[Elements]\n");
 			fprintf(fp, "showuser=1\n");
 			fprintf(fp, "showsettings=1\n");
@@ -96,7 +97,8 @@ void updateconf(GtkButton *button, gpointer user_data)
 			fprintf(fp, "iconsize=%d\n", iconsize);
 			fprintf(fp, "defwidth=%d\n", defwidth);
 			fprintf(fp, "defheight=%d\n", defheight);
-			fprintf(fp, "tilesize=%d\n", tilesize);
+			fprintf(fp, "tileiconsize=%d\n", tileiconsize);
+			fprintf(fp, "tilebuttonsize=%d\n", tilebuttonsize);
 			fprintf(fp, "[Elements]\n");
 			fprintf(fp, "showuser=%d\n", showuser);
 			fprintf(fp, "showsettings=%d\n", showsettings);
@@ -159,8 +161,10 @@ void readconf()
 					iconsize = atoi(value_str);
 				else if (strcmp(name, "showtiles") == 0) 
 					showtiles = atoi(value_str);
-				else if (strcmp(name, "tilesize") == 0) 
-					tilesize = atoi(value_str);
+				else if (strcmp(name, "tileiconsize") == 0) 
+					tileiconsize = atoi(value_str);
+				else if (strcmp(name, "tilebuttonsize") == 0) 
+					tilebuttonsize = atoi(value_str);
 				else if (strcmp(name, "showuser") == 0) 
 					showuser = atoi(value_str);
 				else if (strcmp(name, "showdoc") == 0) 
